@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const { hashPassword, comparePassword } = require("../utils/crypt");
-const { generateTokens } = require("../utils/token");
+const { generateTokens, verifyToken } = require("../utils/token");
 
 const transformUser = (user) => {
   return {
@@ -34,6 +34,9 @@ const authController = {
       }
       const transformedUser = transformUser(user);
       const { accessToken, refreshToken } = generateTokens(user);
+      // Last Login Update
+      user.metadata.lastLogin = new Date();
+      await user.save();
       return res
         .status(200)
         .cookie("refreshToken", refreshToken, {

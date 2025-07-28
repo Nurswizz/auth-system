@@ -1,11 +1,16 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const mongoose = require('mongoose');
+const cookieParser = require("cookie-parser");
+const connectDB = require('./config/db');
+
+// Connect to the database
+connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));

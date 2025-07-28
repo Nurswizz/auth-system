@@ -75,7 +75,7 @@ const userSchema = new mongoose.Schema({
   metadata: {
     lastLogin: {
       type: Date,
-      default: null,
+      default: new Date(),
     },
   },
 }, {
